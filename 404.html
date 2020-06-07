@@ -1,0 +1,537 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://litesearch.cn/css/quligem.css" rel="stylesheet"/>
+    <link href="https://upload.piterator.com/static/node_modules/semantic-ui-css/semantic.min.css" rel="stylesheet" class="ui" />
+    <script src="https://static.piterator.com/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://upload.piterator.com/static/node_modules/semantic-ui-css/semantic.min.js"></script>
+    <title>Pi Search · 搜索派</title>
+    <meta name="keywords" content="Pi,Search,PiSearch,搜索派,LiteSearch,Lite,轻搜索" />
+    <style>
+        *{
+            font-weight: 100!important;
+        }
+        .left-header,.top-bar-header{
+            font-weight: 400!important;
+        }
+        .holders{
+            position: relative;
+            height: 42px;
+            min-width: 360px;
+            width: 40%;
+            margin: auto;
+            text-align: center;
+        }
+        #search_box,#search_box_top{
+            height: 42px;
+            width: 100%;
+            display: block;
+            margin-top: .6em;
+            border-radius: 0.8em;
+            border: 1.5px solid rgb(0,181,173);
+            color: rgb(0,181,173);
+            padding-left: 12px;
+            padding-right: 96px;
+            box-sizing: border-box;
+            font-weight: 100;
+            outline: none;
+        }
+        #search_btn,#search_btn_top{
+            height: 42px;
+            width: 88px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            border: 1.5px solid rgb(0,181,173);
+            box-sizing: border-box;
+            font-weight: 100;
+            border-radius: 0px 12px 12px 0px;
+        }
+        .engines,.dflt_engines{
+            height: 42px;
+            border: 1.5px solid rgb(0,181,173);
+            box-sizing: border-box;
+            font-weight: 100;
+            margin-left: .0625em;
+            margin-right: .0625em;
+        }
+        .engines_holders{
+            height: 47px;
+        }
+        .github_btn{
+            position: relative;
+            top: 5.5px;
+        }
+        .large-links{
+            text-decoration: none;
+        }
+        #pi-logo-font{
+            position: relative;
+            font-size: 1.36em;
+            font-weight: 400!important;
+        }
+        #top-search-box{
+            position: fixed;
+            top: 0px;
+            height: 60px;
+            width: 100%;
+            background-color: #fff;
+        }
+        #main-holder{
+            position: absolute;
+            top: 0px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body onkeypress="if(event.keyCode==13)start()" style="position: relative; visibility: hidden;" id="main-body">
+    <div id="main-holder">
+        <div id="main-large-search" style="height: 150px; z-index: 700; background-color: #fff; box-sizing: border-box;">
+            <!-- <div id="top-search-box" style="z-index: 400;">
+                <div class="holders">
+                    <input id="search_box_top" name="search_box_top" placeholder="搜索无需繁琐" oninput="url_replace(),search_text_change('top')" autocomplete="off" />
+                    <span class="button teal reversal" id="search_btn_top" onclick="start()"><span style="font-weight: 100; font-size: 1.5em; position: relative; top: -.06em;">π</span>一下</span>
+                </div>
+            </div> -->
+            <div style="height: 60px; box-sizing: border-box; z-index: 600; background-color: #fff;"></div>
+            <h1 class="header teal center" style="z-index: 300; background-color: #fff;"><strong id="pi-logo-font">π</strong> Pi Search</h1>
+            <div class="holders" style="z-index: 300;">
+                <input id="search_box" name="search_box" placeholder="搜索无需繁琐" oninput="url_replace()/*,search_text_change('main')*/" autocomplete="off" value="" />
+                <span class="button teal reversal" id="search_btn" onclick="start()"><span style="font-weight: 100; font-size: 1.5em; position: relative; top: -.06em;">π</span>一下</span>
+            </div>
+        </div>
+        <div style="height: 55px; box-sizing: border-box;"></div>
+        <div id="main-large-links" style="width: 40%; z-index: 100; margin: auto; min-width: 360px;">
+            <div class="ui secondary pointing menu">
+                <a class="item active top-bar-header" data-tab="first" onclick="page_pos='',url_replace()" id="bar-common">常用</a>
+                <a class="item top-bar-header" data-tab="second" onclick="page_pos='bookmarks',url_replace()" id="bar-bookmarks">书签</a>
+                <a class="item top-bar-header" data-tab="third" onclick="page_pos='friends',url_replace()" id="bar-friends">友链</a>
+                <a class="item top-bar-header" data-tab="fourth" onclick="page_pos='about',url_replace()" id="bar-about">关于</a>
+                <a class="item top-bar-header" data-tab="fifth" onclick="page_pos='setting',url_replace()" id="bar-setting">设置</a>
+            </div>
+            <div class="ui tab segment active main-tabs" data-tab="first" id="tab-common">
+                <table class="ui celled striped table">
+                    <tbody>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">推荐</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://www.piterator.com/">Piterator</a>
+                                <a class="link teal large-links" target="_blank" href="https://oj.piterator.com/">PiOJ</a>
+                                <a class="link teal large-links" target="_blank" href="https://nazo.oier.fun/" rel="external nofollow">OierNazo</a>
+                                <a class="link teal large-links" target="_blank" href="https://logo.oier.fun/" rel="external nofollow">OierLogo</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">娱乐</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://www.bilibili.com/" rel="external nofollow">哔哩哔哩</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.iqiyi.com/" rel="external nofollow">爱奇艺</a>
+                                <a class="link teal large-links" target="_blank" href="https://v.qq.com/" rel="external nofollow">腾讯视频</a>
+                                <a class="link teal large-links" target="_blank" href="https://2048.org/" rel="external nofollow">2048</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">工具</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://github.com/" rel="external nofollow">GitHub</a>
+                                <a class="link teal large-links" target="_blank" href="https://gitee.com/" rel="external nofollow">Gitee</a>
+                                <a class="link teal large-links" target="_blank" href="https://gitlab.com/" rel="external nofollow">GitLab</a>
+                                <a class="link teal large-links" target="_blank" href="https://t.oier.fun/" rel="external nofollow">元素周期表</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.youdao.com/" rel="external nofollow">有道词典</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">服务</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://www.aliyun.com/" rel="external nofollow">阿里云</a>
+                                <a class="link teal large-links" target="_blank" href="https://cloud.tencent.com/" rel="external nofollow">腾讯云</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.cloudflare.com/zh-cn/" rel="external nofollow">CloudFlare</a>
+                                <a class="link teal large-links" target="_blank" href="https://cloud.baidu.com/" rel="external nofollow">百度智能云</a>
+                                <a class="link teal large-links" target="_blank" href="https://coding.net/" rel="external nofollow">Coding</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">学习</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://www.zhihu.com/" rel="external nofollow">知乎</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.luogu.com.cn/" rel="external nofollow">洛谷</a>
+                                <a class="link teal large-links" target="_blank" href="https://class.luogu.com.cn/course" rel="external nofollow">洛谷网校</a>
+                                <a class="link teal large-links" target="_blank" href="https://ti.luogu.com.cn/" rel="external nofollow">洛谷有题</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">购物</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://www.taobao.com/" rel="external nofollow">淘宝网</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.tmall.com/" rel="external nofollow">天猫</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.jd.com/" rel="external nofollow">京东</a>
+                                <a class="link teal large-links" target="_blank" href="https://chaoshi.tmall.com/" rel="external nofollow">天猫超市</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.tmall.hk/" rel="external nofollow">天猫国际</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.suning.com/" rel="external nofollow">苏宁易购</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.yhd.com/" rel="external nofollow">1号店</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing left-header" style="text-align: center;">域名</td>
+                            <td>
+                                <a class="link teal large-links" target="_blank" href="https://namebeta.com/" rel="external nofollow">NameBeta</a>
+                                <a class="link teal large-links" target="_blank" href="https://wanwang.aliyun.com/" rel="external nofollow">万网(阿里云)</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.dnspod.cn/" rel="external nofollow">DNSPod(腾讯云)</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.west.cn/" rel="external nofollow">西部数码</a>
+                                <a class="link teal large-links" target="_blank" href="https://cloud.baidu.com/product/bcd/search.html" rel="external nofollow">百度智能云域名服务</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui tab segment main-tabs" data-tab="second" id="tab-bookmarks">即将上线，敬请期待</div>
+            <div class="ui tab segment main-tabs" data-tab="third" id="tab-friends">即将上线，敬请期待</div>
+            <div class="ui tab segment main-tabs" data-tab="fourth" id="tab-about">
+                <p style="text-align: center; line-height: 1.8em;" class="teal">
+                    Copyright &copy; <a class="link teal" target="_blank" href="https://www.piterator.com/">Piterator</a> 2017 - 2020. 
+                    <br />
+                    2020 &copy; <a class="link teal" href="/">Pi Search</a> 由 <a class="link teal" target="_blank" href="https://www.piterator.com/">Piterator</a> 的成员博瀚君开发
+                    <br />
+                    All rights reserved. 保留所有权利
+                    <br />
+                    沪ICP备19004827号-5
+                    <br />
+                    <a class="link teal" target="_blank" href="/sitemap.xml">SiteMap</a>
+                </p>
+            </div>
+            <div class="ui tab segment main-tabs" data-tab="fifth" id="tab-setting">
+                <h3 class="teal center">搜索引擎偏好</h3>
+                <p class="teal center link" onclick="default_engine(),url_replace()" style="margin-bottom: .4em;">恢复默认搜索引擎</p>
+                <div class="holders engines_holders" id="enghld_1">
+                    <span class="button teal reversal engines" id="engine_0" onclick="set_engine(0),url_replace()">百度</span>
+                    <span class="button teal engines" id="engine_1" onclick="set_engine(1),url_replace()">必应国内版</span>
+                    <span class="button teal engines" id="engine_2" onclick="set_engine(2),url_replace()">必应国际版</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_2">
+                    <span class="button teal engines" id="engine_3" onclick="set_engine(3),url_replace()">360搜索</span>
+                    <span class="button teal engines" id="engine_4" onclick="set_engine(4),url_replace()">搜狗搜索</span>
+                    <span class="button teal engines" id="engine_5" onclick="set_engine(5),url_replace()">GitHub</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_3">
+                    <span class="button teal engines" id="engine_6" onclick="set_engine(6),url_replace()">码云 Gitee</span>
+                    <span class="button teal engines" id="engine_7" onclick="set_engine(7),url_replace()">OSCHINA</span>
+                    <span class="button teal engines" id="engine_8" onclick="set_engine(8),url_replace()">有道词典</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_4">
+                    <span class="button teal engines" id="engine_9" onclick="set_engine(9),url_replace()">萌娘百科</span>
+                    <span class="button teal engines" id="engine_10" onclick="set_engine(10),url_replace()">DNSPod 域名注册</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_5">
+                    <span class="button teal engines" id="engine_11" onclick="set_engine(11),url_replace()">万网域名注册</span>
+                    <span class="button teal engines" id="engine_12" onclick="set_engine(12),url_replace()">知乎</span>
+                    <span class="button teal engines" id="engine_13" onclick="set_engine(13),url_replace()">哔哩哔哩</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_6">
+                    <span class="button teal engines" id="engine_14" onclick="set_engine(14),url_replace()">洛谷</span>
+                    <span class="button teal engines" id="engine_15" onclick="set_engine(15),url_replace()">CSDN</span>
+                    <span class="button teal engines" id="engine_16" onclick="set_engine(16),url_replace()">淘宝网</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_7">
+                    <span class="button teal engines" id="engine_17" onclick="set_engine(17),url_replace()">京东</span>
+                    <span class="button teal engines" id="engine_18" onclick="set_engine(18),url_replace()">1号店</span>
+                    <span class="button teal engines" id="engine_19" onclick="set_engine(19),url_replace()">天猫</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_8">
+                    <span class="button teal engines" id="engine_20" onclick="set_engine(20),url_replace()">Google</span>
+                    <span class="button teal engines" id="engine_21" onclick="set_engine(21),url_replace()">维基百科</span>
+                    <span class="button teal engines" id="engine_22" onclick="set_engine(22),url_replace()">YouTube</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_9">
+                    <span class="button teal engines" id="engine_23" onclick="set_engine(23),url_replace()">NameBeta</span>
+                    <span class="button teal engines" id="engine_24" onclick="set_engine(24),url_replace()">百度图片</span>
+                    <span class="button teal engines" id="engine_25" onclick="set_engine(25),url_replace()">GitLab</span>
+                </div>
+                <div style="height: 6px; box-sizing: border-box;"></div>
+                <h3 class="teal center" style="margin-bottom: .4em;">默认搜索引擎偏好</h3>
+                <div class="holders engines_holders" id="enghld_1">
+                    <span class="button teal reversal dflt_engines" id="default_engine_0" onclick="set_default_engine(0),url_replace()">百度</span>
+                    <span class="button teal dflt_engines" id="default_engine_1" onclick="set_default_engine(1),url_replace()">必应国内版</span>
+                    <span class="button teal dflt_engines" id="default_engine_2" onclick="set_default_engine(2),url_replace()">必应国际版</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_2">
+                    <span class="button teal dflt_engines" id="default_engine_3" onclick="set_default_engine(3),url_replace()">360搜索</span>
+                    <span class="button teal dflt_engines" id="default_engine_4" onclick="set_default_engine(4),url_replace()">搜狗搜索</span>
+                    <span class="button teal dflt_engines" id="default_engine_5" onclick="set_default_engine(5),url_replace()">GitHub</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_3">
+                    <span class="button teal dflt_engines" id="default_engine_6" onclick="set_default_engine(6),url_replace()">码云 Gitee</span>
+                    <span class="button teal dflt_engines" id="default_engine_7" onclick="set_default_engine(7),url_replace()">OSCHINA</span>
+                    <span class="button teal dflt_engines" id="default_engine_8" onclick="set_default_engine(8),url_replace()">有道词典</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_4">
+                    <span class="button teal dflt_engines" id="default_engine_9" onclick="set_default_engine(9),url_replace()">萌娘百科</span>
+                    <span class="button teal dflt_engines" id="default_engine_10" onclick="set_default_engine(10),url_replace()">DNSPod 域名注册</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_5">
+                    <span class="button teal dflt_engines" id="default_engine_11" onclick="set_default_engine(11),url_replace()">万网域名注册</span>
+                    <span class="button teal dflt_engines" id="default_engine_12" onclick="set_default_engine(12),url_replace()">知乎</span>
+                    <span class="button teal dflt_engines" id="default_engine_13" onclick="set_default_engine(13),url_replace()">哔哩哔哩</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_6">
+                    <span class="button teal dflt_engines" id="default_engine_14" onclick="set_default_engine(14),url_replace()">洛谷</span>
+                    <span class="button teal dflt_engines" id="default_engine_15" onclick="set_default_engine(15),url_replace()">CSDN</span>
+                    <span class="button teal dflt_engines" id="default_engine_16" onclick="set_default_engine(16),url_replace()">淘宝网</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_7">
+                    <span class="button teal dflt_engines" id="default_engine_17" onclick="set_default_engine(17),url_replace()">京东</span>
+                    <span class="button teal dflt_engines" id="default_engine_18" onclick="set_default_engine(18),url_replace()">1号店</span>
+                    <span class="button teal dflt_engines" id="default_engine_19" onclick="set_default_engine(19),url_replace()">天猫</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_8">
+                    <span class="button teal dflt_engines" id="default_engine_20" onclick="set_default_engine(20),url_replace()">Google</span>
+                    <span class="button teal dflt_engines" id="default_engine_21" onclick="set_default_engine(21),url_replace()">维基百科</span>
+                    <span class="button teal dflt_engines" id="default_engine_22" onclick="set_default_engine(22),url_replace()">YouTube</span>
+                </div>
+                <div style="height: 5px; box-sizing: border-box;"></div>
+                <div class="holders engines_holders" id="enghld_9">
+                    <span class="button teal dflt_engines" id="default_engine_23" onclick="set_default_engine(23),url_replace()">NameBeta</span>
+                    <span class="button teal dflt_engines" id="default_engine_24" onclick="set_default_engine(24),url_replace()">百度图片</span>
+                    <span class="button teal dflt_engines" id="default_engine_25" onclick="set_default_engine(25),url_replace()">GitLab</span>
+                </div>
+            </div>
+            <div class="ui tab segment" data-tab="null"></div><!--我是凑数的, 别问为什么, 问就是 UI 的 Bug-->
+        </div>
+        <div style="height: 24px; box-sizing: border-box;"></div>
+    </div>
+    <div class="teal" style="position: fixed; bottom: 10px; width: 100%;">
+        <div style="height: 10px; box-sizing: border-box;"></div>
+        <p style="text-align: center">
+            <span id="sitetime"></span>
+        </p>
+    </div>
+    <script type="text/javascript" defer>
+        $('.menu .item').tab();
+        var default_engine_id=0,engine_id=-1,has_folded=0,path_obj="https://pisearch.cn/",page_pos="";
+        function set_cookie(){
+            localStorage.removeItem("engine");
+            localStorage.removeItem("default_engine");
+            localStorage.setItem("engine",engine_id);
+            localStorage.setItem("default_engine",default_engine_id);
+        }
+        function path_encode(url){
+            return url.replace(/%/g,'%25')//必须在最前面
+                      .replace(/#/g,'%23')
+                      .replace(/\$/g,'%24')
+                      .replace(/&/g,'%26')
+                      .replace(/\+/g,'%2B')
+                      .replace(/,/g,'%2C')
+                      .replace(/\//g,'%2F')
+                      .replace(/:/g,'%3A')
+                      .replace(/=/g,'%3D')
+                      .replace(/\?/g,'%3F')
+                      .replace(/@/g,'%40')
+                      .replace(/\[/g,'%5B')
+                      .replace(/\\/g,'%5C')
+                      .replace(/\]/g,'%5D')
+                      .replace(/\^/g,'%5E')
+                      .replace(/`/g,'%60')
+                      .replace(/{/g,'%7B')
+                      .replace(/}/g,'%7D');
+        }
+        function get_url_jump(temp_engine_id,temp_key_final,do_dfs=1){
+            var ret_url_jump="";
+            if(temp_engine_id==0)ret_url_jump="https://www.baidu.com/s?ie=utf-8&wd="+temp_key_final;
+            else if(temp_engine_id==1)ret_url_jump="https://cn.bing.com/search?ensearch=0&q="+temp_key_final;
+            else if(temp_engine_id==2)ret_url_jump="https://cn.bing.com/search?ensearch=1&q="+temp_key_final;
+            else if(temp_engine_id==3)ret_url_jump="https://www.so.com/s?q="+temp_key_final;
+            else if(temp_engine_id==4)ret_url_jump="https://www.sogou.com/web?query="+temp_key_final;
+            else if(temp_engine_id==5)ret_url_jump="https://github.com/search?q="+temp_key_final;
+            else if(temp_engine_id==6)ret_url_jump="https://search.gitee.com/?q="+temp_key_final;
+            else if(temp_engine_id==7)ret_url_jump="https://www.oschina.net/search?scope=all&q="+temp_key_final;
+            else if(temp_engine_id==8)ret_url_jump="https://www.youdao.com/w/"+temp_key_final;
+            else if(temp_engine_id==9)ret_url_jump="https://zh.moegirl.org/index.php?search="+temp_key_final;
+            else if(temp_engine_id==10)ret_url_jump="https://buy.cloud.tencent.com/domain?domain="+temp_key_final;
+            else if(temp_engine_id==11)ret_url_jump="https://wanwang.aliyun.com/domain/searchresult/#/?keyword="+temp_key_final;
+            else if(temp_engine_id==12)ret_url_jump="https://www.zhihu.com/search?type=content&q="+temp_key_final;
+            else if(temp_engine_id==13)ret_url_jump="https://search.bilibili.com/all?keyword="+temp_key_final;
+            else if(temp_engine_id==14)ret_url_jump="https://www.luogu.com.cn/problem/list?keyword="+temp_key_final;
+            else if(temp_engine_id==15)ret_url_jump="https://so.csdn.net/so/search/s.do?q="+temp_key_final;
+            else if(temp_engine_id==16)ret_url_jump="https://s.taobao.com/search?q="+temp_key_final;
+            else if(temp_engine_id==17)ret_url_jump="https://search.jd.com/Search?enc=utf-8&keyword="+temp_key_final+"&wq="+temp_key_final;
+            else if(temp_engine_id==18)ret_url_jump="https://search.yhd.com/c0-0/k"+temp_key_final;
+            else if(temp_engine_id==19)ret_url_jump="https://list.tmall.com/search_product.htm?q="+temp_key_final;
+            else if(temp_engine_id==20)ret_url_jump="https://www.google.com/search?q="+temp_key_final;
+            else if(temp_engine_id==21)ret_url_jump="https://zh.wikipedia.org/w/index.php?search="+temp_key_final;
+            else if(temp_engine_id==22)ret_url_jump="https://www.youtube.com/results?search_query="+temp_key_final;
+            else if(temp_engine_id==23)ret_url_jump="https://namebeta.com/search/"+temp_key_final;
+            else if(temp_engine_id==24)ret_url_jump="https://image.baidu.com/search/index?tn=baiduimage&word="+temp_key_final;
+            else if(temp_engine_id==25)ret_url_jump="https://gitlab.com/search?utf8=%E2%9C%93&search="+temp_key_final;
+            else if(do_dfs)return get_url_jump(default_engine_id,temp_key_final,0);
+            return ret_url_jump;
+        }
+        function start(){
+            var url_jump,key_final=path_encode(document.getElementById("search_box").value);
+            if(key_final=="")return;
+            url_jump=get_url_jump(engine_id,key_final);
+            window.open(url_jump,"_blank");
+        }
+        function engines_fold(){
+            has_folded=1-has_folded;
+            if(has_folded){
+                $("#engines_fold").html("展开");
+                $("#engines_fold").removeClass("reversal");
+                $(".engines_holders").css("display","none");
+                $("#enghld_"+engine_holder_id).css("display","block");
+            }else{
+                $("#engines_fold").html("折叠");
+                $("#engines_fold").addClass("reversal");
+                $(".engines_holders").css("display","block");
+            }
+        }
+        function url_replace(){
+            var temp_url=path_obj+page_pos+(engine_id!=-1&&engine_id!=default_engine_id?"?e="+engine_id:"")
+            +(document.getElementById("search_box").value!=""?(engine_id!=-1&&engine_id!=default_engine_id?"&":"?")
+            +"q="+path_encode(document.getElementById("search_box").value):"");
+            if(document.domain=="")console.log(temp_url);
+            else history.replaceState({},"Pi Search · 搜索派",temp_url);
+        }
+        // function search_text_change(from_box){
+        //     if(from_box=="main")document.getElementById("search_box_top").value=document.getElementById("search_box").value;
+        //     else if(from_box=="top")document.getElementById("search_box").value=document.getElementById("search_box_top").value;
+        // }
+        function set_engine_css(temp_engine_id,do_dfs=1){
+            if(temp_engine_id==-1){if(do_dfs==1)set_engine_css(default_engine_id,0);}
+            else{
+                $(".engines").removeClass("reversal");
+                $("#engine_"+temp_engine_id).addClass("reversal");
+            }
+        }
+        function default_engine(){
+            engine_id=-1;
+            set_engine_css(default_engine_id);
+            set_cookie();
+        }
+        function set_engine(temp_engine_id){
+            if(temp_engine_id==default_engine_id)engine_id=-1;
+            else engine_id=temp_engine_id;
+            set_engine_css(temp_engine_id);
+            set_cookie();
+        }
+        function set_default_engine(temp_engine_id,do_set_cookie=1){
+            if(engine_id==-1)engine_id=default_engine_id;
+            default_engine_id=temp_engine_id;
+            $(".dflt_engines").removeClass("reversal");
+            $("#default_engine_"+temp_engine_id).addClass("reversal");
+            if(engine_id==temp_engine_id)engine_id=-1;
+            if(do_set_cookie)set_cookie();
+        }
+        function name_to_id(name){
+            if(name=="baidu")return 0;
+            else if(name=="bing")return 1;
+            else if(name=="bing-global"||name=="bing_global"||name=="bingglobal")return 2;
+            else if(name=="360")return 3;
+            else if(name=="sogou"||name=="sougou")return 4;
+            else if(name=="github")return 5;
+            else if(name=="gitee")return 6;
+            else if(name=="oschina")return 7;
+            else if(name=="youdao")return 8;
+            else if(name=="moegirl")return 9
+            else if(name=="dnspod")return 10;
+            else if(name=="wanwang")return 11;
+            else if(name=="zhihu")return 12;
+            else if(name=="bili"||name=="bilibili")return 13;
+            else if(name=="luogu")return 14;
+            else if(name=="csdn")return 15;
+            else if(name=="taobao")return 16;
+            else if(name=="jd"||name=="jingdong")return 17;
+            else if(name=="1hd"||name=="yhd"||name=="1haodian"||name=="yihaodian")return 18;
+            else if(name=="tmall"||name=="tianmao")return 19;
+            else if(name=="google")return 20;
+            else if(name=="wiki"||name=="wikipedia")return 21;
+            else if(name=="youtube")return 22;
+            else if(name=="namebeta"||name=="domain")return 23;
+            else if(name=="baidu-image"||name=="baidu_image"||name=="baiduimage")return 24;
+            else if(name=="gitlab")return 25;
+            else return -1;
+        }
+        window.onload=function onload_run(){
+            if(document.domain!=""&&document.domain!="pisearch.cn")window.location.href=path_obj;
+            document.getElementById("main-body").style.visibility="visible";
+            function getUrlParam(name){
+                var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");
+                var r=window.location.search.substr(1).match(reg);
+                if(r!=null)return unescape(decodeURI(r[2]));
+                return null;
+            }
+            var reg=/^\s*$/,url_e=getUrlParam("e"),url_q=getUrlParam("q"),url_jump_temp=getUrlParam("jump");
+            if(url_q===null)url_q="";
+            var q_before=url_q.split(":")[0];
+            var q_after=url_q;
+            if(name_to_id(q_before)!=-1&&url_jump_temp=="yes")q_after=url_q.substr(q_before.length+1),url_e=name_to_id(q_before);
+            if(url_jump_temp=="yes"){
+                var url_jump,key_final=path_encode(q_after.replace('+',' '));
+                url_jump=get_url_jump(engine_id,key_final);
+                if(key_final!="")window.location.href=url_jump;
+            }
+            if(!(localStorage.getItem("default_engine")===null))set_default_engine(localStorage.getItem("default_engine"),0);
+            if(url_e===null){
+                if(localStorage.getItem("engine")===null)default_engine();
+                else{
+                    url_e=localStorage.getItem("engine");
+                    set_engine(url_e);
+                }
+            }else set_engine(url_e);
+            document.getElementById("search_box").value=q_after.replace(/\+/g,' ');
+            var temp_path_name=window.location.pathname;
+            if(window.location.pathname=="/bookmarks")page_pos='bookmarks';
+            else if(window.location.pathname=="/friends")page_pos="friends";
+            else if(window.location.pathname=="/about")page_pos="about";
+            else if(window.location.pathname=="/setting")page_pos="setting";
+            else page_pos="";
+            $(".top-bar-header").removeClass("active");
+            $(".main-tabs").removeClass("active");
+            if(page_pos=="")$("#bar-common").addClass("active"),$("#tab-common").addClass("active");
+            else $("#bar-"+page_pos).addClass("active"),$("#tab-"+page_pos).addClass("active");
+            // document.getElementById("search_box_top").value=q_after.replace(/\+/g,' ');
+            url_replace();
+        }
+        function siteTime(){
+            window.setTimeout("siteTime()",1000);
+            var seconds=1000;
+            var minutes=seconds*60;
+            var hours=minutes*60;
+            var days=hours*24;
+            var years=days*365;
+            var today=new Date();
+            var todayYear=today.getFullYear();
+            var todayMonth=today.getMonth()+1;
+            var todayDate=today.getDate();
+            var todayHour=today.getHours();
+            var todayMinute=today.getMinutes();
+            var todaySecond=today.getSeconds();
+            var t1=Date.UTC(2020,06,01,00,00,00);
+            var t2=Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+            var diff=t2-t1;
+            var diffYears=Math.floor(diff/years);
+            var diffDays=Math.floor((diff/days)-diffYears*365);
+            var diffHours=Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+            var diffMinutes=Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+            var diffSeconds=Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+            document.getElementById("sitetime").innerHTML="已在风雨中度过 "+(diffYears*365+diffDays)+" 天 "+diffHours+" 小时 "+diffMinutes+" 分 "+diffSeconds+" 秒";
+        }
+        siteTime();
+    </script>
+</body>
+</html>
