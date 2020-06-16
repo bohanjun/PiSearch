@@ -792,12 +792,20 @@
                 $(".engines_holders").css("display","block");
             }
         }
+        function get_pos_title_before(){
+            if(page_pos=="bookmarks")return "书签 · ";
+            else if(page_pos=="friends")return "友链 · ";
+            else if(page_pos=="about")return "关于 · ";
+            else if(page_pos=="setting")return "设置 · ";
+            else return "";
+        }
         function url_replace(){
             var temp_url=path_obj+page_pos+(engine_id!=-1&&engine_id!=default_engine_id?"?e="+engine_id:"")
             +(document.getElementById("search_box").value!=""?(engine_id!=-1&&engine_id!=default_engine_id?"&":"?")
             +"q="+path_encode(document.getElementById("search_box").value):"");
             if(document.domain=="")console.log(temp_url);
-            else history.replaceState({},"Pi Search · 搜索派",temp_url);
+            else history.replaceState({},get_pos_title_before()+"Pi Search · 搜索派",temp_url);
+            $("title").text(get_pos_title_before()+"Pi Search · 搜索派");
         }
         // function search_text_change(from_box){
         //     if(from_box=="main")document.getElementById("search_box_top").value=document.getElementById("search_box").value;
