@@ -216,15 +216,19 @@
             text-align: center;
             box-sizing: border-box;
             cursor: pointer;
+            transition: ease-out background-color .1s;
         }
         .button-selects.teal:hover{
             color: rgb(0,181,173);
-            background: rgba(250,250,250,.9);
+            background: #eee;
+        }
+        .button-selects.teal:active{
+            color: #fff;
+            background: rgb(0, 171, 163);
         }
         .button-selects.teal.reversal{
             color: #fff;
             background: rgb(0,181,173);
-            cursor: default;
         }
         #search_form{
             position: relative;
@@ -269,12 +273,12 @@
         <div style="height: 55px; box-sizing: border-box;"></div>
         <div id="main-large-links" style="width: 40%; z-index: 100; margin: auto; min-width: 360px;">
             <div class="ui secondary pointing menu">
-                <a class="item active top-bar-header" data-tab="tab-common" onfocus="page_pos='',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-common" tabindex="101">常用</a>
-                <a class="item top-bar-header" data-tab="tab-bookmarks" onfocus="page_pos='bookmarks',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-bookmarks" tabindex="102">书签</a>
-                <a class="item top-bar-header" data-tab="tab-friends" onfocus="page_pos='friends',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-friends" tabindex="103">友链</a>
-                <a class="item top-bar-header" data-tab="tab-news" onfocus="page_pos='news',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-news" tabindex="104">新闻</a>
-                <a class="item top-bar-header" data-tab="tab-about" onfocus="page_pos='about',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-about" tabindex="105">关于</a>
-                <a class="item top-bar-header" data-tab="tab-setting" onfocus="page_pos='setting',url_replace(),set_page_pos(),push_baidu_tongji()" id="bar-setting" tabindex="106">设置</a>
+                <a class="item active top-bar-header" data-tab="tab-common" onfocus="page_pos='',url_replace(),set_page_pos()" id="bar-common" tabindex="101">常用</a>
+                <a class="item top-bar-header" data-tab="tab-bookmarks" onfocus="page_pos='bookmarks',url_replace(),set_page_pos()" id="bar-bookmarks" tabindex="102">书签</a>
+                <a class="item top-bar-header" data-tab="tab-friends" onfocus="page_pos='friends',url_replace(),set_page_pos()" id="bar-friends" tabindex="103">友链</a>
+                <a class="item top-bar-header" data-tab="tab-news" onfocus="page_pos='news',url_replace(),set_page_pos()" id="bar-news" tabindex="104">新闻</a>
+                <a class="item top-bar-header" data-tab="tab-about" onfocus="page_pos='about',url_replace(),set_page_pos()" id="bar-about" tabindex="105">关于</a>
+                <a class="item top-bar-header" data-tab="tab-setting" onfocus="page_pos='setting',url_replace(),set_page_pos()" id="bar-setting" tabindex="106">设置</a>
             </div>
             <div class="ui tab segment active main-tabs" data-tab="tab-common" id="tab-common">
                 <table class="ui celled striped table">
@@ -488,7 +492,7 @@
                     <br />
                     沪ICP备19004827号-5 · 工信部备案已接入
                     <br />
-                    Version &beta;eta 0.2.20&beta;0715.7
+                    Version &beta;eta 0.2.20&beta;0715.9
                     <div class="ui divider"></div>
                     <a target="_blank" href="https://myssl.com/pisearch.cn" rel="external nofollow" tabindex="-1">
                         <div style="text-align: center">
@@ -576,9 +580,7 @@
                 <span class="button-selects teal dflt_engines" id="default_engine_25" onclick="set_default_engine(25),url_replace()">GitLab</span>
                 <span class="button-selects teal dflt_engines" id="default_engine_26" onclick="set_default_engine(26),url_replace()">WikiHow</span>
             </div>
-            <div class="ui tab segment" data-tab="null">
-                PiSearch Pi Search Piterator Bohanjun
-            </div><!--我是凑数的, 别问为什么, 问就是 UI 的 Bug-->
+            <div class="ui tab segment" data-tab="null"></div>
         </div>
         <div style="height: 24px; box-sizing: border-box;"></div>
     </div>
@@ -588,7 +590,12 @@
             <span id="sitetime"></span>
         </p>
     </div>
-    <script type="text/javascript" defer>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132660219-2"></script>
+    <script type="text/javascript">
+        window.dataLayer=window.dataLayer||[];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js',new Date());
+        gtag('config','UA-132660219-2');
         var _hmt=_hmt||[];
         (function(){
             var hm=document.createElement("script");
