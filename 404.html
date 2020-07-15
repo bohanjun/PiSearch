@@ -10,9 +10,13 @@
     <meta name="keywords" content="Pi,Search,PiSearch,搜索派,LiteSearch,Lite,轻搜索" />
     <meta name="description" content="Pi Search 由 Piterator 的成员博瀚君开发，是一款简洁的浏览器主页。用户交互界面友好，功能直观，是浏览器主页的不二选择。" />
     <style>
+        html,body{height: 100%;}
         ::selection{
             background-color: #cce2ff;
             color: rgba(0,0,0,.87);
+        }
+        ::-webkit-scrollbar{
+            width: 6px!important;
         }
         *{
             font-family: "Microsoft Yahei", "Consolas", "Inconsolata", "Monaco", "Monofur", "Courier", monospace;
@@ -112,23 +116,6 @@
             background-color: rgb(158,158,158);
             box-sizing: border-box;
         }
-        .footer{
-            width: 100%;
-            background-color: #373737;
-            color: #E7E7E7;
-            margin: auto;
-            margin-top: .8em;
-            padding-top: .78em;
-            padding-bottom: .78em;
-            min-height: 3em;
-            padding-left: 25%;
-            padding-right: 25%;
-            box-sizing: border-box;
-        }
-        .footer.floating{
-            position: fixed;
-            bottom: 0;
-        }
         body{
             margin: 0;
             padding: 0;
@@ -207,8 +194,11 @@
             position: absolute;
             top: 0px;
             width: 100%;
+            height: 100%;
+            overflow-y: auto;
         }
         .button-selects.teal{
+            font-size: 1em;
             min-width: 3.6em;
             padding-left: .3em;
             padding-right: .3em;
@@ -261,12 +251,15 @@
         #search_btn:active{
             background-color: rgb(0,171,163)!important;
         }
+        .large-links{
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body onkeypress="if(event.keyCode==13)start()" style="position: relative; visibility: hidden;" id="main-body" tabindex="-1">
     <div id="main-holder">
-        <div id="main-large-search" style="height: 150px; z-index: 700; background-color: #fff; box-sizing: border-box;">
-            <div style="height: 60px; box-sizing: border-box; z-index: 600; background-color: #fff;"></div>
+        <div id="main-large-search" style="height: 180px; z-index: 700; background-color: #fff; box-sizing: border-box;">
+            <div style="height: 72px; box-sizing: border-box; z-index: 600; background-color: #fff;" id="main-over-top"></div>
             <h1 class="header teal center" style="z-index: 300; background-color: #fff;"><strong id="pi-logo-font">π</strong> Pi Search</h1>
             <div class="holders" style="z-index: 300;" id="search_form">
                 <button class="button teal reversal" id="search_btn" onclick="start()" tabindex="-1"><span style="font-weight: 100; font-size: 1.5em; position: relative; top: -.06em;">π</span>一下</button>
@@ -369,8 +362,8 @@
                             <td>
                                 <a class="link teal large-links" target="_blank" href="https://namebeta.com/" rel="external nofollow" tabindex="-1">NameBeta</a>
                                 <a class="link teal large-links" target="_blank" href="https://wanwang.aliyun.com/" rel="external nofollow" tabindex="-1">万网(阿里云)</a>
-                                <a class="link teal large-links" target="_blank" href="https://www.dnspod.cn/" rel="external nofollow" tabindex="-1">DNSPod(腾讯云)</a>
                                 <a class="link teal large-links" target="_blank" href="https://www.west.cn/" rel="external nofollow" tabindex="-1">西部数码</a>
+                                <a class="link teal large-links" target="_blank" href="https://www.dnspod.cn/" rel="external nofollow" tabindex="-1">DNSPod(腾讯云)</a>
                                 <a class="link teal large-links" target="_blank" href="https://cloud.baidu.com/product/bcd/search.html" rel="external nofollow" tabindex="-1">百度智能云域名服务</a>
                             </td>
                         </tr>
@@ -387,12 +380,12 @@
                     .juicy.cards .card,
                     .juicy.card{
                         display: block;
-                        width: calc(100% / 3 - 1rem);
+                        width: calc(100% / 3 - 1em);
                         background-color: #fff;
-                        border-radius: .4rem;
+                        border-radius: .4em;
                         border: 1px solid rgb(217, 217, 217);
-                        padding-top: .5rem;
-                        padding-bottom: .5rem;
+                        padding-top: .5em;
+                        padding-bottom: .5em;
                         box-sizing: border-box;
                         text-align: left;
                     }
@@ -404,41 +397,41 @@
                     }
                     .juicy.cards .card{
                         height: min-content;
-                        margin-left: .25rem;
-                        margin-right: .25rem;
+                        margin-left: .25em;
+                        margin-right: .25em;
                     }
                     .juicy.cards .card>.header,
                     .juicy.card>.header{
                         display: block;
                         font-weight: 600;
-                        font-size: 1.1rem;
+                        font-size: 1.1em;
                         color: rgb(0, 0, 0);
-                        margin-left: .8rem;
-                        margin-right: .8rem;
+                        margin-left: .8em;
+                        margin-right: .8em;
                     }
                     .juicy.cards .card>.meta,
                     .juicy.card>.meta{
                         display: block;
-                        font-size: .85rem;
+                        font-size: .85em;
                         color: rgb(153, 153, 153);
-                        margin-left: .8rem;
-                        margin-right: .8rem;
+                        margin-left: .8em;
+                        margin-right: .8em;
                     }
                     .juicy.cards .card>.content,
                     .juicy.card>.content{
                         display: block;
-                        font-size: .9rem;
+                        font-size: .9em;
                         color: rgb(0, 0, 0);
-                        margin-top: .4rem;
-                        margin-bottom: .4rem;
-                        margin-left: .8rem;
-                        margin-right: .8rem;
+                        margin-top: .4em;
+                        margin-bottom: .4em;
+                        margin-left: .8em;
+                        margin-right: .8em;
                     }
                     .juicy.cards .card>.divider,
                     .juicy.card>.divider{
                         display: block;
                         height: 0;
-                        margin: .5rem 0;
+                        margin: .5em 0;
                         overflow: hidden;
                         border-top: 1px solid rgb(217, 217, 217);
                         cursor: default;
@@ -446,8 +439,8 @@
                     .juicy.cards .card>.content.extra,
                     .juicy.card>.content.extra{
                         color: rgb(0, 0, 0);
-                        margin-top: .2rem;
-                        margin-bottom: .2rem;
+                        margin-top: .2em;
+                        margin-bottom: .2em;
                     }
                     .juicy.cards .card>.content.extra>.date.right,
                     .juicy.card>.content.extra>.date.right{
@@ -455,7 +448,7 @@
                     }
                 </style>
                 <div class="juicy cards">
-                    <a class="juicy card" href="https://www.piterator.com/" target="_blank" rel="external nofollow" tabindex="-1">
+                    <a class="card" href="https://www.piterator.com/" target="_blank" rel="external nofollow" tabindex="-1">
                         <span class="header">一群 OIer 居然在一起做这种事情！</span>
                         <span class="meta">网友：这届 OIer 尺度太大了吧！</span>
                         <p class="content">
@@ -466,7 +459,7 @@
                             <span class="date right">2020-7-1</span>
                         </div>
                     </a>
-                    <a class="juicy card" href="https://icelava.piterator.com/" target="_blank" rel="external nofollow" tabindex="-1">
+                    <a class="card" href="https://icelava.piterator.com/" target="_blank" rel="external nofollow" tabindex="-1">
                         <span class="header">什么？IceLava 居然有了国内低延迟非同步节点？</span>
                         <span class="meta">ForkKILLET：钛刺激辽！</span>
                         <p class="content">
@@ -495,7 +488,7 @@
                     <br />
                     沪ICP备19004827号-5 · 工信部备案已接入
                     <br />
-                    Version &beta;eta 0.1.20&beta;0715.1
+                    Version &beta;eta 0.2.20&beta;0715.7
                     <div class="ui divider"></div>
                     <a target="_blank" href="https://myssl.com/pisearch.cn" rel="external nofollow" tabindex="-1">
                         <div style="text-align: center">
@@ -589,7 +582,7 @@
         </div>
         <div style="height: 24px; box-sizing: border-box;"></div>
     </div>
-    <div class="teal" style="position: fixed; bottom: 10px; width: 100%;">
+    <div class="teal" style="position: fixed; bottom: 10px; width: 100%;" id="bottom-time">
         <div style="height: 10px; box-sizing: border-box;"></div>
         <p style="text-align: center">
             <span id="sitetime"></span>
@@ -776,6 +769,33 @@
         }
         window.onload=function onload_run(){
             if(document.domain!="localhost"&&document.domain!=""&&document.domain!="pisearch.cn")window.location.href="https://pisearch.cn/";
+            var UserAgentT=navigator.userAgent;
+            if(UserAgentT.indexOf('Android')>-1||UserAgentT.indexOf('iPhone')>-1||UserAgentT.indexOf('iPad')>-1||UserAgentT.indexOf('iPod')>-1||UserAgentT.indexOf('Symbian')>-1){
+                $('body').css('overflow-y','hidden');
+                $('#main-holder').css('zoom','2.4');
+                $('#tab-common').css('line-height','1.5');
+                $('#tab-bookmarks').css('line-height','1.5');
+                $('#tab-friends').css('line-height','1.5');
+                $('.juicy.cards').css('display','block');
+                $('.juicy.cards .card').css('width','calc(100% - .5em)');
+                $('.juicy.cards .card').css('line-height','1.6');
+                $('.juicy.cards .card').css('margin-top','.85em');
+                $('.juicy.cards .card:first-of-type').css('margin-top','0px');
+                $('.juicy.cards .card').css('margin-bottom','.85em');
+                $('.juicy.cards .card:last-of-type').css('margin-bottom','0px');
+                $('.juicy.cards .card>.content.extra').css('height','1em');
+                $('.juicy.cards .card>.content.extra>.date.right').css('line-height','1.2');
+                $('.button-selects.teal').css('padding-top','.5em');
+                $('#bottom-time').css('display','none');
+                $('#main-large-search').css('height','150px');
+                $('#main-over-top').css('height','60px');
+                $('.main-tabs').css('overflow-y','auto');
+                $('.main-tabs').css('position','fixed');
+                $('.main-tabs').css('top','245px');
+                $('.main-tabs').css('max-height','calc(100% - 280px)');
+                $('.main-tabs').css('left','5.7%');
+                $('.main-tabs').css('right','5.7%');
+            }
             document.getElementById("main-body").style.visibility="visible";
             function getUrlParam(name){
                 var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");
@@ -787,10 +807,10 @@
             if(url_q===null)url_q="";
             var q_before=url_q.split(":")[0];
             var q_after=url_q;
-            if(name_to_id(q_before)!=-1&&url_jump_temp=="yes")q_after=url_q.substr(q_before.length+1),url_e=name_to_id(q_before);
+            if(name_to_id(q_before)!=-1&&url_jump_temp=="yes")q_after=url_q.substr(q_before.length+1);
             if(url_jump_temp=="yes"){
                 var url_jump,key_final=path_encode(q_after.replace(/\+/g,' '));
-                url_jump=get_url_jump(engine_id,key_final);
+                url_jump=get_url_jump(name_to_id(q_before),key_final);
                 if(key_final!="")window.location.href=url_jump;
             }
             if(!(localStorage.getItem("default_engine")===null))set_default_engine(localStorage.getItem("default_engine"),0);
