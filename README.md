@@ -1,2 +1,2 @@
 # Pi Search
-> Version βeta 0.2.20β0715.9
+> Version βeta 0.2.20β0719.6
