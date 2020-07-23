@@ -14662,7 +14662,7 @@
     <div id="main-holder">
         <div id="main-large-search" style="height: 180px; box-sizing: border-box;">
             <div style="height: 72px; box-sizing: border-box;" id="main-over-top"></div>
-            <h1 class="header teal center" style="font-weight: 100;" id="main-header"><strong id="pi-logo-font">π</strong> Pi Search</h1>
+            <h1 class="header teal center" style="font-weight: 100;" id="main-header"><strong id="pi-logo-font">&pi;</strong> Pi Search</h1>
             <div class="holders" id="search_form">
                 <button class="button teal reversal" id="search_btn" onclick="start()" tabindex="-1"><span style="font-weight: 100; font-size: 1.5em; position: relative; top: -.06em;">π</span>一下</button>
                 <input id="search_box" name="search_box" placeholder="搜索无需繁琐" oninput="url_replace()" autocomplete="off" value="" tabindex="200" />
@@ -14900,7 +14900,7 @@
                     <br />
                     沪ICP备19004827号-5 · 工信部备案已接入
                     <br />
-                    Version &beta;eta 0.2.20&beta;0719.6
+                    Version &beta;eta 0.2.20&beta;0720.1
                     <div class="ui divider"></div>
                     <a target="_blank" href="https://myssl.com/pisearch.cn" rel="external nofollow" tabindex="-1">
                         <div style="text-align: center">
@@ -15075,7 +15075,7 @@
             var url_jump,key_final=path_encode(document.getElementById("search_box").value);
             if(key_final=="")return;
             url_jump=get_url_jump(engine_id,key_final);
-            window.open(url_jump,"_blank");
+            window.open(url_jump);
         }
         function engines_fold(){
             has_folded=1-has_folded;
